@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if [ -n "$ASDF_INSTALL_PATH" ]; then
+	export HADOOP_HOME=$ASDF_INSTALL_PATH
+
+	if [ -z "$SPARK_DIST_CLASSPATH" ]; then
+		hadoop_classpath=$("$ASDF_INSTALL_PATH/bin/hadoop" classpath)
+		export SPARK_DIST_CLASSPATH=$hadoop_classpath
+	fi
+fi

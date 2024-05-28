@@ -8,4 +8,5 @@ plugin_dir=$(dirname "$(dirname "$current_script_path")")
 # shellcheck source=./lib/utils.bash
 source "${plugin_dir}/lib/utils.bash"
 
-list_all_versions | sort_versions | xargs echo
+response="$(curl "${curl_opts[@]}" "${HADOOP_ARCHIVE_URL}"/)"
+list_all_versions "${response}" | sort_versions | xargs echo
