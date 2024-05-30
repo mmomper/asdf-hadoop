@@ -15,15 +15,6 @@ echoerr() {
 	echo "$1" >&2
 }
 
-if command -v mise &>/dev/null; then
-	bin=mise
-elif command -v asdf &>/dev/null; then
-	bin=asdf
-else
-	echoerr neither mise nor asdf found. Cannot procced.
-	exit 1
-fi
-
 curl_opts=(-fsSL)
 
 sort_versions() {
@@ -76,21 +67,4 @@ install_version() {
 		rm -rf "$install_path"
 		fail "An error occurred while installing $TOOL_NAME $version."
 	)
-}
-
-set_spark_dist_classpath() {
-	local hadoop_classpath java_path java_folder
-
-	if ! java_path=$($bin which java 2>&1); then
-		echoerr "JAVA_HOME not set and java not defined as tool. Can not set SPARK_DIST_CLASSPATH."
-		return
-	fi
-
-	java_folder=$(dirname "$(dirname "$java_path")")
-
-	export JAVA_HOME=$java_folder
-	hadoop_classpath=$("$HADOOP_HOME/bin/hadoop" classpath)
-	unset JAVA_HOME
-
-	export SPARK_DIST_CLASSPATH=$hadoop_classpath
 }

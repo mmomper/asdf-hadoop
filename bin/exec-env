@@ -10,5 +10,4 @@ source "${plugin_dir}/lib/utils.bash"
 
 if [ -n "$ASDF_INSTALL_PATH" ]; then
 	export HADOOP_HOME=$ASDF_INSTALL_PATH
-	set_spark_dist_classpath
 fi
